@@ -19,13 +19,16 @@ function App() {
   }, []);
 
   const addTransaction = async (transaction) => {
-    const res = await axios.post("http://localhost:5000/api/transactions", transaction);
+    const res = await axios.post(
+      "http://localhost:5000/api/transactions",
+      transaction
+    );
     setTransactions([...transactions, res.data]);
   };
 
   return (
     <div className="container py-4">
-      <h1 className="text-center mb-4">🏥 Hospital Finance Tracker</h1>
+      <h1 className="text-center mb-4">Finance Tracker</h1>
       <Summary transactions={transactions} />
       <TransactionForm addTransaction={addTransaction} />
       <TransactionList transactions={transactions} />

@@ -1,27 +1,14 @@
 const express = require("express");
-const Transaction = require("../models/Transaction");
+const transactionRoutes = require("./routes/transactionRoutes");
+const { addTransaction, getTransactions } = require("../controllers/transactionController");
+
 const router = express.Router();
 
-// Add transaction
-router.post("/", async (req, res) => {
-  try {
-    const { type, reason, amount } = req.body;
-    const newTransaction = new Transaction({ type, reason, amount });
-    await newTransaction.save();
-    res.json(newTransaction);
-  } catch (error) {
-    res.status(500).json({ error: "Server Error" });
-  }
-});
+router.post("/", addTransaction);
+router.get("/", getTransactions);
 
-// Get all transactions
-router.get("/", async (req, res) => {
-  try {
-    const transactions = await Transaction.find();
-    res.json(transactions);
-  } catch (error) {
-    res.status(500).json({ error: "Server Error" });
-  }
-});
+
+app.use("/api/transactions", transactionRoutes);
+
 
 module.exports = router;

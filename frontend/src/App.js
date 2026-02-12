@@ -5,12 +5,14 @@ import TransactionForm from "./components/TransactionForm";
 import TransactionList from "./components/TransactionList";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import { API } from "./config";  
 
 function App() {
   const [transactions, setTransactions] = useState([]);
 
+  // GET
   const fetchTransactions = async () => {
-    const res = await axios.get("http://localhost:5000/api/transactions");
+    const res = await axios.get(`${API}/api/transactions`);
     setTransactions(res.data);
   };
 
@@ -18,11 +20,9 @@ function App() {
     fetchTransactions();
   }, []);
 
+  // POST
   const addTransaction = async (transaction) => {
-    const res = await axios.post(
-      "http://localhost:5000/api/transactions",
-      transaction
-    );
+    const res = await axios.post(`${API}/api/transactions`, transaction);
     setTransactions([...transactions, res.data]);
   };
 
